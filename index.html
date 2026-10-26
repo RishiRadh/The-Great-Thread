@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Great Thread</title>
+<meta name="description" content="The Great Thread, near Jain Temple, Mirajgaon, Maharashtra. Shop online or on WhatsApp." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root{--cream:#fbf5ec;--ink:#1d2540;--mu:#6b7189;--saf:#e8a317;--rose:#c2185b;--line:#eadfcf}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--cream);color:var(--ink);line-height:1.6}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3{margin:0;line-height:1.2;font-weight:700}
+a{color:inherit}
+.wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+section{padding:80px 0}
+.tag{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--rose);font-weight:600;margin:0 0 10px}
+.head{text-align:center;margin-bottom:40px}
+.head h2{font-size:clamp(26px,4vw,38px)}
+.muted{color:var(--mu)}
+.small{font-size:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:999px;border:2px solid var(--ink);background:transparent;color:var(--ink);font-weight:600;font-size:14px;text-decoration:none;cursor:pointer;transition:transform .15s}
+.btn:hover:not(:disabled){transform:translateY(-2px)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.fill{background:var(--ink);color:#fff}
+.btn.saf{background:var(--saf);border-color:var(--saf)}
+.btn.wa{background:#25d366;border-color:#25d366;color:#fff}
+.btn.sm{padding:8px 16px;font-size:13px}
+.btn.wide{width:100%}
+.btn.ghost{border-color:var(--line);color:var(--mu)}
+.field{width:100%;padding:11px 14px;border-radius:14px;border:1px solid var(--line);background:#fff}
+.field:focus{outline:2px solid var(--saf);border-color:transparent}
+textarea.field{min-height:80px;resize:vertical}
+header{position:sticky;top:0;z-index:30;background:rgba(251,245,236,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:72px;gap:14px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:800;font-size:17px}
+.logo-c{width:44px;height:44px;border-radius:50%;background:var(--ink);border:2px solid var(--saf);display:grid;place-items:center;color:var(--saf);font-weight:800;overflow:hidden;flex:none}
+.logo-c img{width:100%;height:100%;object-fit:cover}
+.links{display:flex;gap:22px;font-size:14px;font-weight:500}
+.links a{text-decoration:none}
+.links a:hover{color:var(--rose)}
+.navr{display:flex;gap:10px;align-items:center}
+.badge{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 6px;margin-left:6px;border-radius:99px;background:var(--rose);color:#fff;font-size:11px;font-weight:700}
+.hero{padding:70px 0 90px;text-align:center;position:relative;overflow:hidden}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;z-index:-1}
+.hero:before{width:520px;height:520px;top:-210px;right:-160px;background:var(--saf);opacity:.18}
+.hero:after{width:380px;height:380px;bottom:-170px;left:-120px;background:var(--rose);opacity:.12}
+.big{width:160px;height:160px;margin:0 auto 26px;border-radius:50%;background:var(--ink);border:6px solid var(--saf);display:grid;place-items:center;color:var(--saf);font-size:54px;font-weight:800;overflow:hidden}
+.big img{width:100%;height:100%;object-fit:cover}
+.hero h1{font-size:clamp(34px,6vw,64px);font-weight:800;margin-bottom:10px}
+.hero .sub{color:var(--mu);font-size:17px;max-width:560px;margin:0 auto 30px}
+.actions{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+.offers{display:flex;gap:18px;overflow-x:auto;padding:6px 4px 18px;scrollbar-width:none}
+.offers::-webkit-scrollbar{display:none}
+.offer{flex:0 0 270px;background:#fff;border-radius:26px;padding:22px 22px 22px 100px;position:relative;border:1px solid var(--line);min-height:128px}
+.pct{position:absolute;left:18px;top:50%;transform:translateY(-50%);width:68px;height:68px;border-radius:50%;background:var(--rose);color:#fff;display:grid;place-items:center;text-align:center;font-weight:800;font-size:17px;line-height:1.05;box-shadow:0 8px 20px -8px rgba(194,24,91,.7)}
+.pct small{display:block;font-size:9px;font-weight:600;letter-spacing:.08em}
+.offer h3{font-size:16px;margin-bottom:4px}
+.offer p{margin:0;color:var(--mu);font-size:13px}
+.code{display:inline-block;margin-top:8px;padding:4px 12px;border:1.5px dashed var(--rose);border-radius:99px;color:var(--rose);font-weight:700;font-size:12px}
+.tools{display:flex;justify-content:center;margin-bottom:26px}
+.tools .field{max-width:320px;border-radius:99px}
+.cats{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;margin-bottom:46px}
+.catb{background:none;border:0;cursor:pointer;display:grid;justify-items:center;gap:8px;font-size:13px;font-weight:600;padding:0}
+.catb .c{width:80px;height:80px;border-radius:50%;background:#fff;border:3px solid var(--line);display:grid;place-items:center;font-size:24px;font-weight:800;transition:all .2s}
+.catb.on .c,.catb:hover .c{border-color:var(--saf);background:var(--saf)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:34px 26px;align-items:start}
+.stair:nth-child(3n+2){margin-top:56px}
+.stair:nth-child(3n){margin-top:112px}
+.pc{text-align:center;background:#fff;border-radius:30px;padding:22px 18px;border:1px solid var(--line);transition:transform .25s,box-shadow .25s}
+.pc:hover{transform:translateY(-6px);box-shadow:0 18px 40px -22px rgba(29,37,64,.4)}
+.ring{width:172px;height:172px;margin:0 auto 14px;border-radius:50%;overflow:hidden;border:5px solid var(--saf);background:linear-gradient(145deg,hsl(var(--h) 80% 88%),hsl(calc(var(--h) + 60) 70% 75%));display:grid;place-items:center}
+.ring img{width:100%;height:100%;object-fit:cover}
+.ring span{font-size:56px;font-weight:800;color:hsl(var(--h) 60% 30% / .5)}
+.pc .cat{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mu)}
+.pc h3{font-size:17px;margin:4px 0}
+.price{font-weight:800;color:var(--rose);font-size:18px}
+.sel{display:flex;gap:8px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+.sel select{padding:8px 12px;border-radius:99px;border:1px solid var(--line);background:#fff}
+.empty{text-align:center;color:var(--mu);grid-column:1/-1;padding:30px}
+.about{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.about .ring{width:300px;height:300px;margin:0 auto}
+.facts{display:grid;gap:14px;margin-top:22px}
+.fact{background:#fff;border:1px solid var(--line);border-radius:26px;padding:18px 22px;display:flex;gap:14px;align-items:center}
+.fact b{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--ink);color:var(--saf);flex:none}
+.visit{background:var(--ink);color:#f5efe2;border-radius:44px;padding:48px 30px;text-align:center}
+.visit p{margin:0 0 10px;color:#d8d2c2}
+.visit .actions{margin-top:24px}
+.visit .btn{color:#fff;border-color:#fff}
+.visit .btn.wa{border-color:#25d366;color:#fff}
+footer{padding:28px 0;text-align:center;font-size:13px;color:var(--mu)}
+#admin{background:#fff;padding:60px 0}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+.tab{padding:9px 18px;border-radius:99px;border:1px solid var(--line);background:#fff;cursor:pointer;font-weight:600;font-size:13px}
+.tab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pane{display:grid;gap:12px;max-width:760px;margin:0 auto}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.lbl{font-size:12px;color:var(--mu);font-weight:600;display:grid;gap:4px}
+.row{display:flex;align-items:center;gap:12px;background:var(--cream);border-radius:20px;padding:10px 14px;border:1px solid var(--line)}
+.row .th{width:48px;height:48px;border-radius:50%;overflow:hidden;background:var(--line);flex:none;display:grid;place-items:center;font-weight:800;color:var(--mu)}
+.row .th img{width:100%;height:100%;object-fit:cover}
+.row .info{flex:1;min-width:0;font-size:14px}
+.row .info small{color:var(--mu)}
+.mini{padding:6px 12px;border-radius:99px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:12px;font-weight:600}
+.mini.del{color:var(--rose);border-color:#f3c3d6}
+.status{font-size:13px;color:var(--mu);min-height:20px;margin:0}
+.drawer{position:fixed;inset:0;z-index:50;background:rgba(29,37,64,.45);display:flex;justify-content:flex-end}
+.panel{width:min(460px,100%);height:100%;overflow:auto;background:var(--cream);padding:26px;display:flex;flex-direction:column;gap:12px;border-radius:34px 0 0 34px}
+.line{display:flex;align-items:center;gap:12px;background:#fff;border-radius:22px;padding:10px;border:1px solid var(--line)}
+.line .th{width:52px;height:52px;border-radius:50%;overflow:hidden;background:var(--line);flex:none}
+.line .th img{width:100%;height:100%;object-fit:cover}
+.line .info{flex:1;min-width:0;font-size:14px}
+.line small{color:var(--mu);font-size:12px}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer}
+.cp{display:flex;gap:8px}
+.cp .field{border-radius:99px;text-transform:uppercase}
+.sum{background:#fff;border-radius:22px;padding:14px 18px;border:1px solid var(--line);font-size:14px}
+.sum div{display:flex;justify-content:space-between;margin:4px 0}
+.sum .tot{font-weight:800;font-size:18px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,140px);z-index:60;background:var(--ink);color:#fff;padding:12px 20px;border-radius:99px;font-size:14px;transition:transform .3s;max-width:92%}
+.toast.show{transform:translate(-50%,0)}
+.fab{position:fixed;right:18px;bottom:18px;z-index:40;background:#25d366;color:#fff;padding:12px 18px;border-radius:99px;font-weight:700;text-decoration:none;font-size:14px;box-shadow:0 12px 26px -10px rgba(37,211,102,.9)}
+@media (max-width:760px){
+  .links{display:none}
+  .about{grid-template-columns:1fr;gap:30px}
+  .about .ring{width:230px;height:230px}
+  .stair:nth-child(n){margin-top:0}
+  .visit{padding:30px 20px;border-radius:30px}
+  .two{grid-template-columns:1fr}
+  .offer{flex-basis:250px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top"><span class="logo-c" id="logoMini">TG</span><span id="brandName">The Great Thread</span></a>
+    <nav class="links"><a href="#shop">Collection</a><a href="#offers">Offers</a><a href="#about">About</a><a href="#visit">Visit</a></nav>
+    <div class="navr"><a class="btn sm" data-wa>WhatsApp</a><button id="cartBtn" class="btn sm fill" type="button">Cart<span class="badge" id="badge" hidden>0</span></button></div>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="big" id="heroLogo">TG</div>
+    <h1 id="heroName">The Great Thread</h1>
+    <p class="sub" id="heroTag">Fresh threads, great offers</p>
+    <div class="actions"><a class="btn fill" href="#shop">Shop now</a><a class="btn wa" data-wa>Order on WhatsApp</a></div>
+  </div>
+</section>
+
+<section id="offers" hidden>
+  <div class="wrap">
+    <div class="head"><p class="tag">Offers &amp; coupons</p><h2>Save on your order</h2></div>
+    <div class="offers" id="offerStrip"></div>
+  </div>
+</section>
+
+<section id="shop">
+  <div class="wrap">
+    <div class="head"><p class="tag">Collection</p><h2>Pick your thread</h2></div>
+    <div class="cats" id="cats"></div>
+    <div class="tools"><input id="search" class="field" placeholder="Search products" aria-label="Search products" /></div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about">
+    <div><div class="ring" style="--h:25"><span id="aboutInit">TG</span></div></div>
+    <div>
+      <p class="tag">About us</p>
+      <h2 style="font-size:clamp(26px,4vw,38px);margin-bottom:14px">Our story</h2>
+      <p class="muted" id="aboutText" style="font-size:16px"></p>
+      <div class="facts">
+        <div class="fact"><b>✦</b><div><strong>Quality cloth</strong><br><span class="muted">Chosen for comfort and wear.</span></div></div>
+        <div class="fact"><b>%</b><div><strong>Offers and coupons</strong><br><span class="muted">Savings are shown before you order.</span></div></div>
+        <div class="fact"><b>♡</b><div><strong>Friendly help</strong><br><span class="muted">Ask us about sizes on WhatsApp.</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="insta">
+  <div class="wrap">
+    <div class="head"><p class="tag">Instagram</p><h2>Follow us</h2></div>
+    <div class="actions"><a class="btn saf" id="igBtn" target="_blank" rel="noopener">Follow us on Instagram</a></div>
+  </div>
+</section>
+
+<section id="visit">
+  <div class="wrap">
+    <div class="visit">
+      <p class="tag" style="color:var(--saf)">Visit the shop</p>
+      <h2 style="margin-bottom:18px">Find us</h2>
+      <p id="visitAddr"></p>
+      <p id="visitHours" hidden></p>
+      <p id="visitPhone"></p>
+      <div class="actions"><a class="btn wa" data-wa>WhatsApp us</a><a class="btn" data-tel>Call</a></div>
+    </div>
+  </div>
+</section>
+
+<section id="admin" hidden>
+  <div class="wrap">
+    <div class="head"><p class="tag">Owner panel</p><h2>Manage your shop</h2><p class="muted small">Changes appear on the website and in the billing software within a few seconds.</p></div>
+    <div class="pane">
+      <label class="lbl">Shop key (your secret word)<input id="ownerKey" class="field" type="password" autocomplete="off" /></label>
+      <div class="tabs"><button class="tab on" data-tab="shop" type="button">Shop details</button><button class="tab" data-tab="products" type="button">Products</button><button class="tab" data-tab="offers" type="button">Offers &amp; coupons</button></div>
+
+      <div id="pane-shop" class="pane">
+        <div class="two"><label class="lbl">Shop name<input id="sName" class="field" /></label><label class="lbl">Tagline<input id="sTagline" class="field" /></label></div>
+        <label class="lbl">About the shop<textarea id="sAbout" class="field"></textarea></label>
+        <label class="lbl">Address<input id="sAddress" class="field" /></label>
+        <div class="two"><label class="lbl">Phone<input id="sPhone" class="field" /></label><label class="lbl">WhatsApp (with 91, digits only)<input id="sWhats" class="field" inputmode="numeric" /></label></div>
+        <div class="two"><label class="lbl">Opening hours<input id="sHours" class="field" /></label><label class="lbl">Instagram link<input id="sInsta" class="field" /></label></div>
+        <label class="lbl">Shop logo (a square image works best)<input id="sLogo" class="field" type="file" accept="image/*" /></label>
+        <div><button class="btn fill" id="btnSaveShop" type="button">Save shop details</button></div>
+        <p class="status" id="sStatus"></p>
+      </div>
+
+      <div id="pane-products" class="pane" hidden>
+        <div id="productList" style="display:grid;gap:8px"></div>
+        <h3 id="pFormTitle" style="margin-top:8px">Add a product</h3>
+        <div class="two"><label class="lbl">Product name<input id="pName" class="field" /></label><label class="lbl">Category<input id="pCat" class="field" placeholder="Kurtas, Sarees, Men" /></label></div>
+        <div class="two"><label class="lbl">Colour<input id="pColour" class="field" /></label><label class="lbl">Price ₹<input id="pPrice" class="field" type="number" min="0" /></label></div>
+        <label class="lbl">Sizes and quantity (example: M:5, L:3, XL:0)<input id="pSizes" class="field" /></label>
+        <label class="lbl">Product photo<input id="pPhoto" class="field" type="file" accept="image/*" /></label>
+        <label class="small muted"><input type="checkbox" id="pRemovePhoto" /> Remove the current photo</label>
+        <div class="actions" style="justify-content:flex-start"><button class="btn fill" id="btnSaveProduct" type="button">Save product</button><button class="btn ghost" id="btnClearProduct" type="button">Clear</button></div>
+        <p class="status" id="pStatus"></p>
+      </div>
+
+      <div id="pane-offers" class="pane" hidden>
+        <div id="offerAdminList" style="display:grid;gap:8px"></div>
+        <h3 id="oFormTitle" style="margin-top:8px">Add an offer or coupon</h3>
+        <div class="two"><label class="lbl">Title<input id="oTitle" class="field" placeholder="Festival sale" /></label><label class="lbl">Type<select id="oType" class="field"><option>Offer</option><option>Event</option></select></label></div>
+        <label class="lbl">Details<input id="oDetails" class="field" /></label>
+        <div class="two"><label class="lbl">Discount %<input id="oDiscount" class="field" type="number" min="0" max="90" /></label><label class="lbl">Coupon code (blank = automatic offer)<input id="oCoupon" class="field" /></label></div>
+        <div class="two"><label class="lbl">Minimum order ₹<input id="oMin" class="field" type="number" min="0" /></label><label class="lbl">Valid till (blank = no end date)<input id="oUntil" class="field" type="date" /></label></div>
+        <label class="small"><input type="checkbox" id="oActive" checked /> Active</label>
+        <div class="actions" style="justify-content:flex-start"><button class="btn fill" id="btnSaveOffer" type="button">Save offer</button><button class="btn ghost" id="btnClearOffer" type="button">Clear</button></div>
+        <p class="status" id="oStatus"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap"><span id="footName">The Great Thread</span> · <span id="footAddr"></span> · <a href="#admin">Owner panel</a></div></footer>
+
+<a class="fab" data-wa>Chat on WhatsApp</a>
+
+<div id="drawer" class="drawer" hidden>
+  <aside class="panel" role="dialog" aria-label="Your order">
+    <div style="display:flex;justify-content:space-between;align-items:center"><h2 style="font-size:22px">Your order</h2><button class="btn ghost sm" id="closeCart" type="button">Close</button></div>
+    <div id="lines" style="display:grid;gap:10px"></div>
+    <div class="cp"><input id="coupon" class="field" placeholder="Coupon code" /><button class="btn sm" id="btnCoupon" type="button">Apply</button></div>
+    <p class="small muted" id="couponMsg" style="margin:0"></p>
+    <div class="sum">
+      <div><span>Subtotal</span><span id="subtotal">₹0</span></div>
+      <div id="discRow" hidden><span id="discLabel">Discount</span><span id="discount">₹0</span></div>
+      <div class="tot"><span>Total</span><span id="total">₹0</span></div>
+    </div>
+    <input id="cName" class="field" placeholder="Your name *" autocomplete="name" />
+    <input id="cPhone" class="field" placeholder="Phone number *" inputmode="tel" />
+    <input id="cAddr" class="field" placeholder="Delivery address (blank = pick up)" />
+    <select id="cPay" class="field"><option>Pay at shop</option><option>UPI</option><option>Pay on delivery</option></select>
+    <input id="cNote" class="field" placeholder="Note (optional)" />
+    <button class="btn fill wide" id="btnOrder" type="button" disabled>Place order</button>
+    <button class="btn wa wide" id="btnWa" type="button" disabled>Send order on WhatsApp</button>
+    <button class="btn ghost wide" id="btnClear" type="button">Clear order</button>
+  </aside>
+</div>
+<div id="toast" class="toast" role="status"></div>
+
+<script>
+/* =========================================================================
+   SETTINGS: the connection to your shop database (see the setup guide)
+   Put your Project URL and anon public key here. Never put the shop key here.
+   ========================================================================= */
+const CLOUD = { url: 'https://iagktquupqdplbefgscm.supabase.co', anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlhZ2t0cXV1cHFkcGxiZWZnc2NtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI1NzY4NDgsImV4cCI6MjEwODE1Mjg0OH0.Gazgox1p9_NjoiB9MEXCziebfuPq5UevEO4RDGglPUA' };
+const LIVE = !(CLOUD.url.includes('YOUR-PROJECT') || CLOUD.anonKey.startsWith('YOUR_'));
+
+// Starting details. Once connected, the owner panel changes these.
+const SHOP = {
+  name: 'The Great Thread',
+  tagline: 'Fresh threads, great offers',
+  about: 'Welcome to The Great Thread, near the Jain Temple in Mirajgaon. Browse the collection, check the current offers and coupons, and order online or on WhatsApp.',
+  address: 'The Great Thread, near Jain Temple, Mirajgaon, Maharashtra',
+  phone: '+91 8530341009',
+  whatsapp: '918530341009',
+  hours: '',
+  instagram: 'https://www.instagram.com/mahaveer_collection_mirajgaon?cplk=cG95aTRsa2UwYzN3',
+  logo: ''
+};
+
+// Sample products shown only when the database is not connected yet
+const DEMO_ROWS = [
+  { sku: 'KUR-M', name: 'Printed Cotton Kurta', category: 'Kurtas', colour: 'Maroon', size: 'M', price: 899, stock: 5 },
+  { sku: 'KUR-L', name: 'Printed Cotton Kurta', category: 'Kurtas', colour: 'Maroon', size: 'L', price: 899, stock: 3 },
+  { sku: 'SAR-FREE', name: 'Silk Blend Saree', category: 'Sarees', colour: 'Royal Blue', size: 'Free', price: 2499, stock: 4 }
+];
+
+let rows = [];
+let offers = [];
+let photos = new Map();
+let groups = [];
+let cart = [];
+let couponCode = '';
+let activeCat = 'All';
+let editing = null;
+let editingOffer = null;
+let pendingPhoto = null;
+let pendingLogo = null;
+
+const $ = (s) => document.querySelector(s);
+const v = (s) => $(s).value.trim();
+const esc = (t) => String(t == null ? '' : t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const money = (n) => '₹' + Math.round(Number(n) || 0).toLocaleString('en-IN');
+const today = () => new Date().toLocaleDateString('en-CA');
+const waLink = (msg) => `https://wa.me/${SHOP.whatsapp}?text=${encodeURIComponent(msg)}`;
+const setStatus = (sel, msg) => { $(sel).textContent = msg; };
+
+function toast(msg) {
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toast.t);
+  toast.t = setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+async function rest(path, opts = {}) {
+  const headers = { apikey: CLOUD.anonKey, Authorization: 'Bearer ' + CLOUD.anonKey, 'Content-Type': 'application/json' };
+  if (opts.owner) headers['x-shop-key'] = sessionStorage.getItem('tgt_key') || '';
+  if (opts.prefer) headers.Prefer = opts.prefer;
+  const res = await fetch(`${CLOUD.url}/rest/v1/${path}`, { method: opts.method || 'GET', headers, body: opts.body === undefined ? undefined : JSON.stringify(opts.body) });
+  if (res.status === 401 || res.status === 403) throw new Error('Wrong shop key, or no permission to change this.');
+  if (!res.ok) throw new Error(`Request failed (${res.status}).`);
+  const text = await res.text();
+  return text ? JSON.parse(text) : null;
+}
+
+function needKey() {
+  const k = v('#ownerKey');
+  if (!k) throw new Error('Enter your shop key at the top of the owner panel.');
+  sessionStorage.setItem('tgt_key', k);
+}
+
+function shrinkDataUrl(src, maxSide) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      const scale = Math.min(1, maxSide / Math.max(img.width, img.height));
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.max(1, Math.round(img.width * scale));
+      canvas.height = Math.max(1, Math.round(img.height * scale));
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+      resolve(canvas.toDataURL('image/webp', 0.85));
+    };
+    img.onerror = () => resolve('');
+    img.src = src;
+  });
+}
+
+function readFile(input, maxSide, done) {
+  const f = input.files && input.files[0];
+  if (!f) return;
+  const r = new FileReader();
+  r.onload = async () => done(await shrinkDataUrl(r.result, maxSide));
+  r.readAsDataURL(f);
+}
+
+/* ---------- shop details ---------- */
+function applySettings(r) {
+  if (r) {
+    Object.assign(SHOP, {
+      name: r.name || SHOP.name,
+      tagline: r.tagline || '',
+      about: r.about || '',
+      address: r.address || '',
+      phone: r.phone || '',
+      whatsapp: String(r.whatsapp || '').replace(/\D/g, '') || SHOP.whatsapp,
+      hours: r.hours || '',
+      instagram: r.instagram || '',
+      logo: r.logo || ''
+    });
+  }
+  const initials = SHOP.name.split(/\s+/).map(w => w.charAt(0)).join('').slice(0, 2).toUpperCase() || 'TG';
+  const logoHtml = (cls) => SHOP.logo ? `<img src="${esc(SHOP.logo)}" alt="">` : esc(initials);
+  $('#logoMini').innerHTML = logoHtml();
+  $('#heroLogo').innerHTML = logoHtml();
+  $('#brandName').textContent = SHOP.name;
+  $('#heroName').textContent = SHOP.name;
+  $('#heroTag').textContent = SHOP.tagline;
+  $('#aboutText').textContent = SHOP.about;
+  $('#aboutInit').textContent = initials;
+  $('#visitAddr').textContent = SHOP.address;
+  $('#visitHours').textContent = SHOP.hours ? 'Open: ' + SHOP.hours : '';
+  $('#visitHours').hidden = !SHOP.hours;
+  $('#visitPhone').textContent = SHOP.phone;
+  $('#footName').textContent = SHOP.name;
+  $('#footAddr').textContent = SHOP.address;
+  $('#igBtn').href = SHOP.instagram || '#';
+  $('#igBtn').hidden = !SHOP.instagram;
+  document.querySelectorAll('[data-wa]').forEach(el => { el.href = waLink(`Hello ${SHOP.name}, I would like to order.`); el.target = '_blank'; el.rel = 'noopener'; });
+  document.querySelectorAll('[data-tel]').forEach(el => { el.href = 'tel:' + SHOP.phone.replace(/[^+\d]/g, ''); });
+  document.title = SHOP.name;
+}
+
+function fillShopForm() {
+  $('#sName').value = SHOP.name;
+  $('#sTagline').value = SHOP.tagline;
+  $('#sAbout').value = SHOP.about;
+  $('#sAddress').value = SHOP.address;
+  $('#sPhone').value = SHOP.phone;
+  $('#sWhats').value = SHOP.whatsapp;
+  $('#sHours').value = SHOP.hours;
+  $('#sInsta').value = SHOP.instagram;
+}
+
+async function loadLive(withPhotos) {
+  const [settings, prods, offs] = await Promise.all([
+    rest('shop_settings?id=eq.1&select=*'),
+    rest('products?select=*&order=name.asc'),
+    rest('offers?select=*&order=until.asc')
+  ]);
+  if (withPhotos) photos = new Map(((await rest('product_photos?select=sku,photo')) || []).map(r => [r.sku, r.photo]));
+  applySettings(settings && settings[0]);
+  rows = prods || [];
+  offers = offs || [];
+  render();
+}
+
+async function saveShop() {
+  try {
+    if (!LIVE) throw new Error('Connect the database first (see the setup guide).');
+    needKey();
+    const row = {
+      name: v('#sName') || SHOP.name,
+      tagline: v('#sTagline'),
+      about: v('#sAbout'),
+      address: v('#sAddress'),
+      phone: v('#sPhone'),
+      whatsapp: v('#sWhats').replace(/\D/g, ''),
+      hours: v('#sHours'),
+      instagram: v('#sInsta'),
+      logo: pendingLogo !== null ? pendingLogo : SHOP.logo
+    };
+    const res = await rest('shop_settings?id=eq.1', { method: 'PATCH', owner: true, prefer: 'return=representation', body: row });
+    if (!res || !res.length) throw new Error('Wrong shop key, or no permission to change this.');
+    pendingLogo = null;
+    applySettings(res[0]);
+    fillShopForm();
+    setStatus('#sStatus', 'Saved. The billing software will update in a few seconds.');
+  } catch (e) { setStatus('#sStatus', e.message); }
+}
+
+/* ---------- products ---------- */
+function buildGroups(src) {
+  const map = new Map();
+  src.forEach(r => {
+    const key = `${r.name}|${r.colour || ''}`;
+    if (!map.has(key)) map.set(key, { name: r.name, category: r.category || 'Other', colour: r.colour || '', price: Number(r.price) || 0, photo: '', sizes: [] });
+    const g = map.get(key);
+    g.sizes.push({ size: r.size || 'Free', sku: r.sku, stock: Number(r.stock) || 0, price: Number(r.price) || 0 });
+    if (!g.photo && photos.get(r.sku)) g.photo = photos.get(r.sku);
+    g.price = Math.min(g.price, Number(r.price) || g.price);
+  });
+  return [...map.values()];
+}
+
+function parseSizes(text) {
+  return text.split(',').map(s => s.trim()).filter(Boolean).map(s => {
+    const [size, qty] = s.split(':').map(x => (x || '').trim());
+    return { size: size || 'Free', qty: Math.max(0, parseInt(qty, 10) || 0) };
+  });
+}
+
+function newSku(name, colour, size) {
+  const base = `${name}-${colour}-${size}`.toUpperCase().replace(/[^A-Z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 28);
+  return `${base}-${Date.now().toString(36).slice(-4).toUpperCase()}`;
+}
+
+function clearProductForm() {
+  editing = null;
+  ['#pName', '#pCat', '#pColour', '#pPrice', '#pSizes'].forEach(s => { $(s).value = ''; });
+  $('#pPhoto').value = '';
+  $('#pRemovePhoto').checked = false;
+  pendingPhoto = null;
+  $('#pFormTitle').textContent = 'Add a product';
+}
+
+function editProduct(i) {
+  const g = groups[i];
+  if (!g) return;
+  editing = g.sizes.map(s => ({ size: s.size, sku: s.sku }));
+  $('#pName').value = g.name;
+  $('#pCat').value = g.category;
+  $('#pColour').value = g.colour;
+  $('#pPrice').value = g.price;
+  $('#pSizes').value = g.sizes.map(s => `${s.size}:${s.stock}`).join(', ');
+  $('#pPhoto').value = '';
+  $('#pRemovePhoto').checked = false;
+  pendingPhoto = null;
+  $('#pFormTitle').textContent = `Edit: ${g.name}`;
+  setStatus('#pStatus', 'Change anything, then click Save product.');
+}
+
+async function saveProduct() {
+  try {
+    if (!LIVE) throw new Error('Connect the database first (see the setup guide).');
+    needKey();
+    const name = v('#pName');
+    const colour = v('#pColour');
+    const category = v('#pCat') || 'Other';
+    const price = Number(v('#pPrice'));
+    if (!name || v('#pPrice') === '' || price < 0) throw new Error('Enter the product name and price.');
+    const sizes = parseSizes(v('#pSizes'));
+    if (!sizes.length) throw new Error('Enter sizes and quantity, for example M:5, L:3, XL:0.');
+    const before = editing || [];
+    const body = sizes.map(s => {
+      const old = before.find(b => b.size === s.size);
+      return { sku: old ? old.sku : newSku(name, colour, s.size), name, category, colour, size: s.size, price, stock: s.qty };
+    });
+    await rest('products?on_conflict=sku', { method: 'POST', owner: true, prefer: 'resolution=merge-duplicates,return=minimal', body });
+    for (const b of before.filter(b => !sizes.some(s => s.size === b.size))) {
+      await rest(`products?sku=eq.${encodeURIComponent(b.sku)}`, { method: 'DELETE', owner: true, prefer: 'return=minimal' });
+      await rest(`product_photos?sku=eq.${encodeURIComponent(b.sku)}`, { method: 'DELETE', owner: true, prefer: 'return=minimal' });
+    }
+    const skus = body.map(b => b.sku);
+    if (pendingPhoto) {
+      await rest('product_photos?on_conflict=sku', { method: 'POST', owner: true, prefer: 'resolution=merge-duplicates,return=minimal', body: skus.map(sku => ({ sku, photo: pendingPhoto })) });
+    } else if ($('#pRemovePhoto').checked) {
+      for (const sku of skus) await rest(`product_photos?sku=eq.${encodeURIComponent(sku)}`, { method: 'DELETE', owner: true, prefer: 'return=minimal' });
+    }
+    clearProductForm();
+    await loadLive(true);
+    setStatus('#pStatus', 'Product saved. It is now on the website and in the billing software.');
+  } catch (e) { setStatus('#pStatus', e.message); }
+}
+
+async function deleteProduct(i) {
+  const g = groups[i];
+  if (!g || !confirm(`Delete ${g.name} (${g.colour}) and all its sizes?`)) return;
+  try {
+    if (!LIVE) throw new Error('Connect the database first (see the setup guide).');
+    needKey();
+    for (const s of g.sizes) {
+      await rest(`products?sku=eq.${encodeURIComponent(s.sku)}`, { method: 'DELETE', owner: true, prefer: 'return=minimal' });
+      await rest(`product_photos?sku=eq.${encodeURIComponent(s.sku)}`, { method: 'DELETE', owner: true, prefer: 'return=minimal' });
+    }
+    clearProductForm();
+    await loadLive(true);
+    setStatus('#pStatus', 'Product deleted.');
+  } catch (e) { setStatus('#pStatus', e.message); }
+}
+
+/* ---------- offers and coupons ---------- */
+const activeOffers = () => offers.filter(o => o.active !== false && (!o.until || o.until >= today()));
+
+function clearOfferForm() {
+  editingOffer = null;
+  ['#oTitle', '#oDetails', '#oDiscount', '#oCoupon', '#oMin', '#oUntil'].forEach(s => { $(s).value = ''; });
+  $('#oType').value = 'Offer';
+  $('#oActive').checked = true;
+  $('#oFormTitle').textContent = 'Add an offer or coupon';
+}
+
+function editOffer(id) {
+  const o = offers.find(x => x.id === id);
+  if (!o) return;
+  editingOffer = id;
+  $('#oTitle').value = o.title || '';
+  $('#oType').value = o.type || 'Offer';
+  $('#oDetails').value = o.details || '';
+  $('#oDiscount').value = Number(o.discount) || '';
+  $('#oCoupon').value = o.coupon || '';
+  $('#oMin').value = Number(o.min_order) || '';
+  $('#oUntil').value = o.until || '';
+  $('#oActive').checked = o.active !== false;
+  $('#oFormTitle').textContent = `Edit: ${o.title}`;
+}
+
+async function saveOffer() {
+  try {
+    if (!LIVE) throw new Error('Connect the database first (see the setup guide).');
+    needKey();
+    const title = v('#oTitle');
+    if (!title) throw new Error('Enter a title for the offer.');
+    const row = {
+      id: editingOffer || 'off_' + Date.now().toString(36),
+      type: $('#oType').value,
+      title,
+      details: v('#oDetails'),
+      discount: Math.max(0, Number(v('#oDiscount')) || 0),
+      coupon: v('#oCoupon').toUpperCase(),
+      min_order: Math.max(0, Number(v('#oMin')) || 0),
+      until: v('#oUntil') || null,
+      active: $('#oActive').checked
+    };
+    await rest('offers?on_conflict=id', { method: 'POST', owner: true, prefer: 'resolution=merge-duplicates,return=minimal', body: row });
+    clearOfferForm();
+    await loadLive(false);
+    setStatus('#oStatus', 'Offer saved. It now shows on the website.');
+  } catch (e) { setStatus('#oStatus', e.message); }
+}
+
+async function deleteOffer(id) {
+  if (!confirm('Delete this offer?')) return;
+  try {
+    if (!LIVE) throw new Error('Connect the database first (see the setup guide).');
+    needKey();
+    await rest(`offers?id=eq.${encodeURIComponent(id)}`, { method: 'DELETE', owner: true, prefer: 'return=minimal' });
+    clearOfferForm();
+    await loadLive(false);
+    setStatus('#oStatus', 'Offer deleted.');
+  } catch (e) { setStatus('#oStatus', e.message); }
+}
+
+// Works out the discount. An automatic offer applies by itself. A coupon applies if the customer types it.
+// The customer gets whichever of the two gives the bigger saving.
+function pricing(subtotal, code) {
+  let best = { amount: 0, label: '' };
+  activeOffers().filter(o => !o.coupon && Number(o.discount) > 0 && subtotal >= Number(o.min_order || 0)).forEach(o => {
+    const amt = subtotal * Number(o.discount) / 100;
+    if (amt > best.amount) best = { amount: amt, label: o.title };
+  });
+  let msg = '';
+  if (code) {
+    const c = activeOffers().find(o => o.coupon && o.coupon.toUpperCase() === code.toUpperCase());
+    if (!c) msg = 'That coupon code is not valid today.';
+    else if (subtotal < Number(c.min_order || 0)) msg = `Coupon ${c.coupon} needs a minimum order of ${money(c.min_order)}.`;
+    else {
+      const amt = subtotal * Number(c.discount) / 100;
+      if (amt > best.amount) { best = { amount: amt, label: `Coupon ${c.coupon}` }; msg = `Coupon ${c.coupon} applied.`; }
+      else msg = 'An automatic offer gives you a bigger saving.';
+    }
+  }
+  const discount = Math.min(subtotal, Math.round(best.amount));
+  return { subtotal, discount, total: subtotal - discount, label: best.label, msg };
+}
+
+/* ---------- storefront ---------- */
+function renderOffersStrip() {
+  const list = activeOffers();
+  $('#offers').hidden = !list.length;
+  $('#offerStrip').innerHTML = list.map(o => `
+    <div class="offer">
+      <div class="pct">${Number(o.discount) ? Number(o.discount) + '%<small>OFF</small>' : '✦'}</div>
+      <h3>${esc(o.title)}</h3>
+      <p>${esc(o.details || '')}</p>
+      ${o.coupon ? `<span class="code">Code ${esc(o.coupon)}</span>` : ''}
+      ${o.until ? `<p>Valid till ${esc(o.until)}</p>` : ''}
+    </div>`).join('');
+}
+
+function renderCats() {
+  const cats = ['All', ...new Set(groups.map(g => g.category))];
+  $('#cats').innerHTML = cats.map(c => `<button type="button" class="catb${c === activeCat ? ' on' : ''}" data-cat="${esc(c)}"><span class="c">${esc(c === 'All' ? '★' : c.charAt(0).toUpperCase())}</span>${esc(c)}</button>`).join('');
+}
+
+function renderGrid() {
+  const q = v('#search').toLowerCase();
+  const list = groups.filter(g => (activeCat === 'All' || g.category === activeCat) && `${g.name} ${g.colour} ${g.category}`.toLowerCase().includes(q));
+  $('#grid').innerHTML = list.length ? list.map(g => `
+    <article class="pc stair">
+      <div class="ring" style="--h:${(g.i * 57) % 360}">${g.photo ? `<img src="${esc(g.photo)}" alt="${esc(g.name)}">` : `<span>${esc(g.name.charAt(0))}</span>`}</div>
+      <p class="cat">${esc(g.category)} · ${esc(g.colour)}</p>
+      <h3>${esc(g.name)}</h3>
+      <p class="price">${money(g.price)}</p>
+      <div class="sel">
+        <select aria-label="Size">${g.sizes.map((s, k) => `<option value="${k}"${s.stock <= 0 ? ' disabled' : ''}>${esc(s.size)}${s.stock <= 0 ? ' (sold out)' : ''}</option>`).join('')}</select>
+        <button class="btn sm fill" type="button" data-add="${g.i}">Add</button>
+      </div>
+    </article>`).join('') : '<p class="empty">Nothing here yet.</p>';
+}
+
+function addToCart(g, s) {
+  if (!s || s.stock <= 0) { toast('That size is sold out'); return; }
+  const line = cart.find(l => l.sku === s.sku);
+  if (line && line.qty >= s.stock) { toast(`Only ${s.stock} left in this size`); return; }
+  if (line) line.qty += 1;
+  else cart.push({ sku: s.sku, name: g.name, size: s.size, colour: g.colour, price: s.price, qty: 1, photo: g.photo });
+  saveCart();
+  toast(`${g.name} (${s.size}) added`);
+}
+
+function saveCart() {
+  try { localStorage.setItem('tgt_cart', JSON.stringify(cart)); } catch (e) { /* storage blocked */ }
+  renderCart();
+}
+
+function subtotalOf() { return cart.reduce((a, l) => a + l.qty * l.price, 0); }
+
+function renderCart() {
+  const count = cart.reduce((a, l) => a + l.qty, 0);
+  $('#badge').textContent = count;
+  $('#badge').hidden = !count;
+  $('#lines').innerHTML = cart.length ? cart.map((l, i) => `
+    <div class="line">
+      <div class="th">${l.photo ? `<img src="${esc(l.photo)}" alt="">` : ''}</div>
+      <div class="info"><strong>${esc(l.name)}</strong><br><small>${esc(l.size)} · ${esc(l.colour)} · ${money(l.price)}</small></div>
+      <div class="qty"><button type="button" data-q="${i}" data-d="-1">−</button><span>${l.qty}</span><button type="button" data-q="${i}" data-d="1">+</button></div>
+    </div>`).join('') : '<p class="muted">Your order is empty.</p>';
+  const pr = pricing(subtotalOf(), couponCode);
+  $('#subtotal').textContent = money(pr.subtotal);
+  $('#discRow').hidden = !pr.discount;
+  $('#discLabel').textContent = pr.label || 'Discount';
+  $('#discount').textContent = '-' + money(pr.discount);
+  $('#total').textContent = money(pr.total);
+  $('#couponMsg').textContent = pr.msg;
+  $('#btnOrder').hidden = !LIVE;
+  $('#btnOrder').disabled = !cart.length;
+  $('#btnWa').disabled = !cart.length;
+}
+
+function openCart() { $('#drawer').hidden = false; document.body.style.overflow = 'hidden'; renderCart(); }
+function closeCart() { $('#drawer').hidden = true; document.body.style.overflow = ''; }
+
+function orderPayload() {
+  const name = v('#cName');
+  const phone = v('#cPhone');
+  if (!cart.length) { toast('Add a piece first'); return null; }
+  if (!name || !phone) { toast('Please enter your name and phone number'); return null; }
+  const pr = pricing(subtotalOf(), couponCode);
+  return {
+    id: 'WEB' + Date.now().toString(36).toUpperCase(),
+    order_date: today(),
+    customer: name,
+    phone,
+    address: v('#cAddr'),
+    payment: $('#cPay').value,
+    note: v('#cNote'),
+    items: cart.map(l => ({ sku: l.sku, name: l.name, size: l.size, colour: l.colour, price: l.price, qty: l.qty })),
+    subtotal: pr.subtotal,
+    discount: pr.discount,
+    coupon: pr.label.startsWith('Coupon ') ? pr.label.slice(7) : '',
+    total: pr.total,
+    status: 'new'
+  };
+}
+
+async function placeOrder() {
+  const o = orderPayload();
+  if (!o || !LIVE) return;
+  try {
+    await rest('web_orders', { method: 'POST', prefer: 'return=minimal', body: o });
+    cart = [];
+    couponCode = '';
+    saveCart();
+    closeCart();
+    toast(`Order ${o.id} placed. We will confirm on WhatsApp.`);
+  } catch (e) { toast('Could not place the order. Please try again or use WhatsApp.'); }
+}
+
+function sendWhatsApp() {
+  const pr = pricing(subtotalOf(), couponCode);
+  const text = [
+    `New order for ${SHOP.name}`,
+    v('#cName') ? `Name: ${v('#cName')}${v('#cPhone') ? ' (' + v('#cPhone') + ')' : ''}` : '',
+    ...cart.map(l => `- ${l.name} (${l.size}, ${l.colour}) x${l.qty} = ${money(l.price * l.qty)}`),
+    `Subtotal: ${money(pr.subtotal)}`,
+    pr.discount ? `${pr.label}: -${money(pr.discount)}` : '',
+    `Total: ${money(pr.total)}`
+  ].filter(Boolean).join('\n');
+  window.open(`https://wa.me/${SHOP.whatsapp}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+}
+
+/* ---------- owner panel ---------- */
+function renderAdminProducts() {
+  $('#productList').innerHTML = groups.length ? groups.map((g, i) => `
+    <div class="row">
+      <div class="th">${g.photo ? `<img src="${esc(g.photo)}" alt="">` : esc(g.name.charAt(0))}</div>
+      <div class="info"><strong>${esc(g.name)}</strong> · ${esc(g.colour)}<br><small>${money(g.price)} · ${g.sizes.map(s => `${esc(s.size)}: ${s.stock}`).join(', ')}</small></div>
+      <button class="mini" type="button" data-edit-prod="${i}">Edit</button>
+      <button class="mini del" type="button" data-del-prod="${i}">Delete</button>
+    </div>`).join('') : '<p class="muted small">No products yet. Add one below.</p>';
+}
+
+function renderAdminOffers() {
+  $('#offerAdminList').innerHTML = offers.length ? offers.map(o => `
+    <div class="row">
+      <div class="info"><strong>${esc(o.title)}</strong>${o.active === false ? ' <small>(off)</small>' : ''}<br><small>${Number(o.discount) ? Number(o.discount) + '% off' : 'Event'}${o.coupon ? ' · code ' + esc(o.coupon) : ''}${Number(o.min_order) ? ' · min ' + money(o.min_order) : ''}${o.until ? ' · till ' + esc(o.until) : ''}</small></div>
+      <button class="mini" type="button" data-edit-offer="${esc(o.id)}">Edit</button>
+      <button class="mini del" type="button" data-del-offer="${esc(o.id)}">Delete</button>
+    </div>`).join('') : '<p class="muted small">No offers yet.</p>';
+}
+
+function showAdmin() {
+  const box = $('#admin');
+  const opening = box.hidden;
+  box.hidden = location.hash !== '#admin';
+  if (box.hidden || !opening) return;
+  fillShopForm();
+  $('#ownerKey').value = sessionStorage.getItem('tgt_key') || '';
+  if (!LIVE) setStatus('#sStatus', 'Connect the database first (see the setup guide).');
+  if (box.scrollIntoView) box.scrollIntoView({ behavior: 'smooth' });
+}
+
+function render() {
+  groups = buildGroups(rows);
+  groups.forEach((g, i) => { g.i = i; });
+  renderOffersStrip();
+  renderCats();
+  renderGrid();
+  renderCart();
+  renderAdminProducts();
+  renderAdminOffers();
+}
+
+/* ---------- events ---------- */
+$('#grid').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-add]');
+  if (!b) return;
+  const g = groups[+b.dataset.add];
+  addToCart(g, g.sizes[+b.parentElement.querySelector('select').value]);
+});
+$('#cats').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-cat]');
+  if (!b) return;
+  activeCat = b.dataset.cat;
+  renderCats();
+  renderGrid();
+});
+$('#search').addEventListener('input', renderGrid);
+$('#lines').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-q]');
+  if (!b) return;
+  const i = +b.dataset.q;
+  cart[i].qty += +b.dataset.d;
+  if (cart[i].qty < 1) cart.splice(i, 1);
+  saveCart();
+});
+$('#btnCoupon').addEventListener('click', () => {
+  couponCode = v('#coupon').toUpperCase();
+  renderCart();
+});
+$('#btnOrder').addEventListener('click', placeOrder);
+$('#btnWa').addEventListener('click', sendWhatsApp);
+$('#btnClear').addEventListener('click', () => { cart = []; couponCode = ''; saveCart(); });
+$('#cartBtn').addEventListener('click', openCart);
+$('#closeCart').addEventListener('click', closeCart);
+$('#drawer').addEventListener('click', (e) => { if (e.target === $('#drawer')) closeCart(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeCart(); });
+
+document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('on', t === b));
+  ['shop', 'products', 'offers'].forEach(n => { $('#pane-' + n).hidden = n !== b.dataset.tab; });
+}));
+$('#btnSaveShop').addEventListener('click', saveShop);
+$('#sLogo').addEventListener('change', (e) => readFile(e.target, 256, (d) => { pendingLogo = d; setStatus('#sStatus', 'Logo ready. Click Save shop details.'); }));
+$('#pPhoto').addEventListener('change', (e) => readFile(e.target, 480, (d) => { pendingPhoto = d; setStatus('#pStatus', 'Photo ready. Click Save product.'); }));
+$('#btnSaveProduct').addEventListener('click', saveProduct);
+$('#btnClearProduct').addEventListener('click', clearProductForm);
+$('#productList').addEventListener('click', (e) => {
+  const edit = e.target.closest('[data-edit-prod]');
+  const del = e.target.closest('[data-del-prod]');
+  if (edit) editProduct(+edit.dataset.editProd);
+  if (del) deleteProduct(+del.dataset.delProd);
+});
+$('#btnSaveOffer').addEventListener('click', saveOffer);
+$('#btnClearOffer').addEventListener('click', clearOfferForm);
+$('#offerAdminList').addEventListener('click', (e) => {
+  const edit = e.target.closest('[data-edit-offer]');
+  const del = e.target.closest('[data-del-offer]');
+  if (edit) editOffer(edit.dataset.editOffer);
+  if (del) deleteOffer(del.dataset.delOffer);
+});
+window.addEventListener('hashchange', showAdmin);
+
+/* ---------- start ---------- */
+try { cart = JSON.parse(localStorage.getItem('tgt_cart')) || []; } catch (e) { cart = []; }
+applySettings(null);
+if (LIVE) {
+  loadLive(true).catch(() => toast('Could not reach the shop database. Showing saved details.'));
+  setInterval(() => { if (!document.hidden) loadLive(false).catch(() => {}); }, 30000);
+} else {
+  rows = DEMO_ROWS;
+  render();
+}
+showAdmin();
+</script>
+</body>
+</html>
