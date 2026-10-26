@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Great Thread | Admin Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-100 text-gray-900 font-sans">
+
+    <!-- Login Gate -->
+    <div id="auth-screen" class="min-h-screen flex items-center justify-center p-4 bg-slate-900">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl max-w-md w-full text-center">
+            <h2 class="text-2xl font-bold mb-2">Admin Access</h2>
+            <p class="text-gray-500 text-sm mb-6">Enter your shop key to manage inventory & orders</p>
+            <input type="password" id="shop-key-input" placeholder="Enter Shop Key" class="w-full border rounded-xl px-4 py-3 mb-4 focus:ring-2 focus:ring-indigo-500 text-center font-mono">
+            <button onclick="verifyKey()" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-xl hover:bg-indigo-700 transition">Login to Dashboard</button>
+        </div>
+    </div>
+
+    <!-- Main Admin Dashboard -->
+    <div id="admin-app" class="hidden min-h-screen flex flex-col">
+        <header class="bg-slate-900 text-white px-6 py-4 flex justify-between items-center shadow-md">
+            <h1 class="text-xl font-bold"><i class="fa-solid fa-gauge text-amber-400 mr-2"></i> Admin Portal - The Great Thread</h1>
+            <button onclick="location.reload()" class="text-sm bg-slate-800 hover:bg-red-600 px-3 py-1.5 rounded-lg transition">Logout</button>
+        </header>
+
+        <div class="flex-1 max-w-7xl w-full mx-auto p-6 grid grid-cols-1 md:grid-cols-4 gap-6">
+            <!-- Sidebar Navigation -->
+            <div class="bg-white p-4 rounded-2xl shadow-sm space-y-2 h-fit">
+                <button onclick="switchTab('orders')" id="btn-orders" class="w-full text-left px-4 py-2.5 rounded-xl font-semibold bg-indigo-50 text-indigo-600 transition"><i class="fa-solid fa-box mr-2"></i> Customer Orders</button>
+                <button onclick="switchTab('products')" id="btn-products" class="w-full text-left px-4 py-2.5 rounded-xl font-semibold text-gray-600 hover:bg-gray-50 transition"><i class="fa-solid fa-shirt mr-2"></i> Product Catalog</button>
+                <button onclick="switchTab('offers')" id="btn-offers" class="w-full text-left px-4 py-2.5 rounded-xl font-semibold text-gray-600 hover:bg-gray-50 transition"><i class="fa-solid fa-tag mr-2"></i> Offers & Coupons</button>
+                <button onclick="switchTab('settings')" id="btn-settings" class="w-full text-left px-4 py-2.5 rounded-xl font-semibold text-gray-600 hover:bg-gray-50 transition"><i class="fa-solid fa-gear mr-2"></i> Shop Settings</button>
+            </div>
+
+            <!-- Content Area -->
+            <div class="md:col-span-3 space-y-6">
+                
+                <!-- ORDERS TAB -->
+                <div id="tab-orders" class="bg-white p-6 rounded-2xl shadow-sm">
+                    <h3 class="text-xl font-bold mb-4">Customer Orders</h3>
+                    <div id="orders-list" class="space-y-4">Loading orders...</div>
+                </div>
+
+                <!-- PRODUCTS TAB -->
+                <div id="tab-products" class="bg-white p-6 rounded-2xl shadow-sm hidden">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold">Manage Products</h3>
+                        <button onclick="openProductModal()" class="bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-indigo-700">+ Add Product</button>
+                    </div>
+                    <div id="admin-products-list" class="overflow-x-auto">
+                        <!-- Products Table -->
+                    </div>
+                </div>
+
+                <!-- OFFERS TAB -->
+                <div id="tab-offers" class="bg-white p-6 rounded-2xl shadow-sm hidden">
+                    <h3 class="text-xl font-bold mb-4">Offers & Coupons</h3>
+                    <div class="space-y-4">
+                        <input type="text" id="offer-code" placeholder="Coupon Code (e.g. FESTIVE10)" class="w-full border p-2.5 rounded-lg">
+                        <input type="text" id="offer-title" placeholder="Offer Title / Description" class="w-full border p-2.5 rounded-lg">
+                        <button onclick="saveOffer()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold">Create Offer</button>
+                    </div>
+                </div>
+
+                <!-- SETTINGS TAB -->
+                <div id="tab-settings" class="bg-white p-6 rounded-2xl shadow-sm hidden">
+                    <h3 class="text-xl font-bold mb-4">Shop Settings</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Shop Name</label>
+                            <input type="text" id="set-name" class="w-full border p-2.5 rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Tagline / Address</label>
+                            <input type="text" id="set-tagline" class="w-full border p-2.5 rounded-lg">
+                        </div>
+                        <button onclick="saveSettings()" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-semibold">Save Settings</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Editor Modal -->
+    <div id="product-modal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-white p-6 rounded-2xl max-w-md w-full space-y-4">
+            <h3 class="text-lg font-bold">Add / Edit Product</h3>
+            <input type="text" id="p-sku" placeholder="SKU (e.g. RSB-SH-01)" class="w-full border p-2 rounded-lg font-mono">
+            <input type="text" id="p-name" placeholder="Product Name" class="w-full border p-2 rounded-lg">
+            <select id="p-cat" class="w-full border p-2 rounded-lg">
+                <option value="Shirts">Shirts</option>
+                <option value="T-Shirts">T-Shirts</option>
+                <option value="Pants">Pants</option>
+                <option value="Sarees">Sarees</option>
+            </select>
+            <input type="text" id="p-colour" placeholder="Colour" class="w-full border p-2 rounded-lg">
+            <input type="text" id="p-size" placeholder="Size (e.g. M, L, XL or Free)" class="w-full border p-2 rounded-lg">
+            <input type="number" id="p-price" placeholder="Price (₹)" class="w-full border p-2 rounded-lg">
+            <input type="text" id="p-photo" placeholder="Photo Image URL" class="w-full border p-2 rounded-lg">
+            <div class="flex gap-2 pt-2">
+                <button onclick="saveProduct()" class="flex-1 bg-indigo-600 text-white py-2 rounded-lg font-semibold">Save Product</button>
+                <button onclick="closeProductModal()" class="flex-1 bg-gray-200 py-2 rounded-lg font-semibold">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = "https://your-project-id.supabase.co";
+        const SUPABASE_ANON_KEY = "your-anon-key";
+        let shopKey = "";
+        
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+            auth: { persistSession: false },
+            global: { headers: { get 'x-shop-key'() { return shopKey; } } }
+        });
+
+        async function verifyKey() {
+            shopKey = document.getElementById('shop-key-input').value.trim();
+            let { data, error } = await supabaseClient.from('shop_settings').select('*').limit(1);
+            if (error) {
+                alert('Invalid Shop Key or connection error!');
+            } else {
+                document.getElementById('auth-screen').classList.add('hidden');
+                document.getElementById('admin-app').classList.remove('hidden');
+                loadOrders();
+                loadAdminProducts();
+            }
+        }
+
+        function switchTab(tab) {
+            ['orders', 'products', 'offers', 'settings'].forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                document.getElementById(`btn-${t}`).className = "w-full text-left px-4 py-2.5 rounded-xl font-semibold text-gray-600 hover:bg-gray-50 transition";
+            });
+            document.getElementById(`tab-${tab}`).classList.remove('hidden');
+            document.getElementById(`btn-${tab}`).className = "w-full text-left px-4 py-2.5 rounded-xl font-semibold bg-indigo-50 text-indigo-600 transition";
+        }
+
+        async function loadOrders() {
+            let { data } = await supabaseClient.from('web_orders').select('*').order('created_at', { ascending: false });
+            const container = document.getElementById('orders-list');
+            container.innerHTML = '';
+            if (!data || data.length === 0) { container.innerHTML = '<p class="text-gray-500">No orders received yet.</p>'; return; }
+            data.forEach(o => {
+                container.innerHTML += `
+                    <div class="border rounded-xl p-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-gray-50">
+                        <div>
+                            <span class="font-bold text-indigo-600">${o.id}</span> - <span class="font-semibold">${o.customer}</span> (${o.phone})<br>
+                            <span class="text-xs text-gray-500">Address: ${o.address} | Payment: ${o.payment}</span><br>
+                            <span class="text-sm font-bold mt-1 inline-block">Total: ₹${o.total}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs px-2.5 py-1 rounded-full uppercase font-bold bg-amber-100 text-amber-800">${o.status}</span>
+                            <button onclick="updateOrderStatus('${o.id}', 'completed')" class="bg-green-600 text-white text-xs px-3 py-1.5 rounded-lg">Mark Done</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        async function updateOrderStatus(id, status) {
+            await supabaseClient.from('web_orders').update({ status }).eq('id', id);
+            loadOrders();
+        }
+
+        async function loadAdminProducts() {
+            let { data } = await supabaseClient.from('products').select('*');
+            const list = document.getElementById('admin-products-list');
+            list.innerHTML = `<table class="w-full text-left border-collapse">
+                <thead><tr class="border-b text-sm text-gray-500"><th class="py-2">SKU</th><th>Name</th><th>Category</th><th>Price</th><th>Action</th></tr></thead>
+                <tbody id="admin-prod-tbody"></tbody>
+            </table>`;
+            const tbody = document.getElementById('admin-prod-tbody');
+            data.forEach(p => {
+                tbody.innerHTML += `
+                    <tr class="border-b text-sm">
+                        <td class="py-3 font-mono">${p.sku}</td>
+                        <td class="font-semibold">${p.name}</td>
+                        <td>${p.category}</td>
+                        <td>₹${p.price}</td>
+                        <td><button onclick="deleteProduct('${p.sku}')" class="text-red-600 hover:underline">Delete</button></td>
+                    </tr>
+                `;
+            });
+        }
+
+        function openProductModal() { document.getElementById('product-modal').classList.remove('hidden'); }
+        function closeProductModal() { document.getElementById('product-modal').classList.add('hidden'); }
+
+        async function saveProduct() {
+            const product = {
+                sku: document.getElementById('p-sku').value,
+                name: document.getElementById('p-name').value,
+                category: document.getElementById('p-cat').value,
+                colour: document.getElementById('p-colour').value,
+                size: document.getElementById('p-size').value,
+                price: parseFloat(document.getElementById('p-price').value) || 0,
+                photo: document.getElementById('p-photo').value
+            };
+            const { error } = await supabaseClient.from('products').upsert([product]);
+            if (error) alert('Error: ' + error.message);
+            else { closeProductModal(); loadAdminProducts(); alert('Product saved successfully!'); }
+        }
+
+        async function deleteProduct(sku) {
+            if (confirm('Are you sure you want to delete this product?')) {
+                await supabaseClient.from('products').delete().eq('sku', sku);
+                loadAdminProducts();
+            }
+        }
+
+        async function saveOffer() {
+            const id = document.getElementById('offer-code').value.toUpperCase();
+            const title = document.getElementById('offer-title').value;
+            const { error } = await supabaseClient.from('offers').upsert([{ id, title }]);
+            if (error) alert('Error: ' + error.message);
+            else alert('Offer created successfully!');
+        }
+    </script>
+</body>
+</html>
