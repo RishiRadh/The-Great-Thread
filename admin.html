@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>Shop admin · The Great Thread</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root{--ink:#1d2540;--mu:#6b7189;--saf:#e8a317;--line:#e2dbcc;--bg:#f4f1ea;--ok:#067d62;--bad:#b12704}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;font-family:'Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--ink);font-size:14px}
+button,input,select,textarea{font:inherit;color:inherit}
+.login{min-height:100vh;display:grid;place-items:center;padding:20px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;max-width:420px;width:100%}
+.app{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+aside.side{background:var(--ink);color:#fff;padding:18px 12px;position:sticky;top:0;height:100vh}
+.side h1{font-size:15px;margin:0 8px 14px;line-height:1.3}
+.side nav{display:grid;gap:2px}
+.side button{display:block;width:100%;text-align:left;background:none;border:0;color:#d8d2c2;padding:10px 12px;border-radius:8px;cursor:pointer;font-size:14px}
+.side button.on,.side button:hover{background:rgba(255,255,255,.1);color:#fff}
+main.view{padding:24px;min-width:0}
+h2{font-size:20px;margin:0 0 4px}
+h3{font-size:15px;margin:14px 0 6px}
+.sub{color:var(--mu);margin:0 0 16px}
+.box{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.full{grid-column:1/-1}
+label{font-size:12px;color:var(--mu);display:grid;gap:4px;font-weight:500}
+input,select,textarea{width:100%;padding:9px 11px;border:1px solid #c9c1ae;border-radius:8px;background:#fff}
+input[type=checkbox]{width:auto}
+textarea{min-height:70px;resize:vertical}
+.btn{border:0;border-radius:8px;padding:9px 16px;font-weight:600;cursor:pointer;background:#e9e3d4;color:var(--ink)}
+.btn.p{background:var(--ink);color:#fff}
+.btn.g{background:var(--ok);color:#fff}
+.btn.d{background:#fbe3dc;color:var(--bad)}
+.btn.sm{padding:5px 10px;font-size:12px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.thumb{width:52px;height:52px;border-radius:10px;overflow:hidden;background:var(--line);display:grid;place-items:center;font-weight:800;color:var(--mu);flex:none}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.grow{flex:1;min-width:0}
+.muted{color:var(--mu);font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:16px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
+.stat b{display:block;font-size:24px}
+.stat span{font-size:12px;color:var(--mu)}
+.pill{display:inline-block;border-radius:99px;padding:2px 9px;font-size:11px;font-weight:600;background:#eee;margin-left:4px}
+.pill.new{background:#fde9b8}.pill.received{background:#d6ecff}.pill.done{background:#d2f0e4}.pill.cancelled{background:#f3d6d0}
+.tg{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.msg{font-size:13px;color:var(--mu);min-height:18px;margin-top:8px}
+.msg.bad{color:var(--bad)}
+table{width:100%;border-collapse:collapse}
+td,th{padding:4px 6px;text-align:left}
+#toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,120px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:99px;transition:transform .3s;z-index:50;max-width:92%}
+#toast.show{transform:translate(-50%,0)}
+@media (max-width:820px){.app{grid-template-columns:1fr}aside.side{position:static;height:auto}.side nav{display:flex;flex-wrap:wrap;gap:4px}.side button{width:auto}.grid2,.grid3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="login" id="login">
+  <div class="card">
+    <h2>Shop admin</h2>
+    <p class="sub">The Great Thread · enter your shop key</p>
+    <label>Shop key<input id="lKey" type="password" autocomplete="off" /></label>
+    <div style="margin-top:12px"><button class="btn p" id="btnLogin" type="button">Open admin</button></div>
+    <p class="msg" id="lMsg"></p>
+  </div>
+</div>
+
+<div class="app" id="appUi" hidden>
+  <aside class="side">
+    <h1>The Great Thread<br><span style="font-weight:400;font-size:12px;color:#bdb5a4">Admin</span></h1>
+    <nav id="nav">
+      <button data-v="dash" class="on" type="button">Dashboard</button>
+      <button data-v="orders" type="button">Orders</button>
+      <button data-v="products" type="button">Products</button>
+      <button data-v="offers" type="button">Offers &amp; coupons</button>
+      <button data-v="shop" type="button">Shop &amp; address</button>
+      <button data-v="pay" type="button">Payments &amp; delivery</button>
+      <button data-v="site" type="button">View website</button>
+      <button id="btnLogout" type="button">Log out</button>
+    </nav>
+  </aside>
+  <main class="view" id="view"></main>
+</div>
+<div id="toast" role="status"></div>
+
+<script>
+const CLOUD = { url: 'https://iagktquupqdplbefgscm.supabase.co', anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlhZ2t0cXV1cHFkcGxiZWZnc2NtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI1NzY4NDgsImV4cCI6MjEwODE1Mjg0OH0.Gazgox1p9_NjoiB9MEXCziebfuPq5UevEO4RDGglPUA' };
+
+let settings = {}, rows = [], groups = [], photos = new Map(), offers = [], orders = [];
+let view = 'dash', pEdit = null, pendingPhoto = null, pendingLogo = null, editingOffer = null, orderFilter = 'open';
+
+const $ = (s) => document.querySelector(s);
+const val = (id) => ($('#' + id) ? $('#' + id).value.trim() : '');
+const chk = (id) => !!($('#' + id) && $('#' + id).checked);
+const esc = (t) => String(t == null ? '' : t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const money = (n) => '₹' + Math.round(Number(n) || 0).toLocaleString('en-IN');
+const today = () => new Date().toLocaleDateString('en-CA');
+const enc = encodeURIComponent;
+const isOpen = (o) => o.status !== 'done' && o.status !== 'cancelled';
+
+function toast(m) {
+  const t = $('#toast');
+  t.textContent = m;
+  t.classList.add('show');
+  clearTimeout(toast.t);
+  toast.t = setTimeout(() => t.classList.remove('show'), 2600);
+}
+const msg = (id, text, bad) => { const el = $('#' + id); if (el) { el.textContent = text; el.className = 'msg' + (bad ? ' bad' : ''); } };
+
+async function rest(path, opts = {}) {
+  const h = { apikey: CLOUD.anonKey, Authorization: 'Bearer ' + CLOUD.anonKey, 'Content-Type': 'application/json' };
+  if (opts.owner) h['x-shop-key'] = sessionStorage.getItem('tgt_key') || '';
+  if (opts.prefer) h.Prefer = opts.prefer;
+  const res = await fetch(`${CLOUD.url}/rest/v1/${path}`, { method: opts.method || 'GET', headers: h, body: opts.body === undefined ? undefined : JSON.stringify(opts.body) });
+  if (res.status === 401 || res.status === 403) throw new Error('Wrong shop key, or no permission to change this.');
+  if (!res.ok) throw new Error(`Request failed (${res.status}).`);
+  const t = await res.text();
+  return t ? JSON.parse(t) : null;
+}
+
+function shrink(src, maxSide) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      const s = Math.min(1, maxSide / Math.max(img.width, img.height));
+      const c = document.createElement('canvas');
+      c.width = Math.max(1, Math.round(img.width * s));
+      c.height = Math.max(1, Math.round(img.height * s));
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      resolve(c.toDataURL('image/webp', 0.85));
+    };
+    img.onerror = () => resolve('');
+    img.src = src;
+  });
+}
+function pickFile(input, maxSide, done) {
+  const f = input.files && input.files[0];
+  if (!f) return;
+  const r = new FileReader();
+  r.onload = async () => done(await shrink(r.result, maxSide));
+  r.readAsDataURL(f);
+}
+
+const newSku = (name, colour, size) => `${name}-${colour}-${size}`.toUpperCase().replace(/[^A-Z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 28) + '-' + Date.now().toString(36).slice(-4).toUpperCase();
+
+function buildGroups() {
+  const m = new Map();
+  rows.forEach(r => {
+    const k = `${r.name}|${r.colour || ''}`;
+    if (!m.has(k)) m.set(k, { name: r.name, category: r.category || 'Other', colour: r.colour || '', price: Number(r.price) || 0, photo: '', sizes: [] });
+    const g = m.get(k);
+    g.sizes.push({ size: r.size || 'Free', sku: r.sku, stock: Number(r.stock) || 0 });
+    if (!g.photo && photos.get(r.sku)) g.photo = photos.get(r.sku);
+    g.price = Math.min(g.price, Number(r.price) || g.price);
+  });
+  groups = [...m.values()];
+}
+
+async function loadAll() {
+  const [st, pr, of] = await Promise.all([rest('shop_settings?id=eq.1&select=*'), rest('products?select=*&order=name.asc'), rest('offers?select=*&order=until.asc')]);
+  settings = (st && st[0]) || {};
+  rows = pr || [];
+  offers = of || [];
+  photos = new Map(((await rest('product_photos?select=sku,photo')) || []).map(r => [r.sku, r.photo]));
+  orders = (await rest('web_orders?select=*&order=created_at.desc&limit=300', { owner: true })) || [];
+  buildGroups();
+}
+
+/* ---------- navigation ---------- */
+function show(v) {
+  view = v;
+  document.querySelectorAll('#nav button[data-v]').forEach(b => b.classList.toggle('on', b.dataset.v === v));
+  if (v === 'site') { window.open('index.html', '_blank', 'noopener'); return; }
+  // reload the latest data each time a section opens, so new website orders appear
+  return loadAll().catch(() => {}).then(render);
+}
+function render() {
+  const el = $('#view');
+  if (view === 'dash') el.innerHTML = viewDash();
+  else if (view === 'orders') el.innerHTML = viewOrders();
+  else if (view === 'products') el.innerHTML = viewProducts();
+  else if (view === 'offers') el.innerHTML = viewOffers();
+  else if (view === 'shop') el.innerHTML = viewShop();
+  else if (view === 'pay') el.innerHTML = viewPay();
+  if (view === 'orders') renderOrderList();
+}
+
+/* ---------- dashboard ---------- */
+function viewDash() {
+  const low = rows.filter(r => Number(r.stock) > 0 && Number(r.stock) <= 2).length;
+  const sold = rows.filter(r => Number(r.stock) <= 0).length;
+  const openN = orders.filter(isOpen).length;
+  const todaySales = orders.filter(o => o.order_date === today() && o.status !== 'cancelled').reduce((a, o) => a + Number(o.total), 0);
+  const awaiting = orders.filter(o => o.payment_status === 'pending' && o.status !== 'cancelled').length;
+  const stats = [[groups.length, 'Products'], [rows.length, 'Sizes listed'], [low, 'Low stock (2 or fewer)'], [sold, 'Sold-out sizes'], [offers.filter(o => o.active !== false && (!o.until || o.until >= today())).length, 'Active offers'], [openN, 'Open orders'], [money(todaySales), "Today's order value"], [awaiting, 'Payments to confirm']];
+  return `<h2>Dashboard</h2><p class="sub">Your shop at a glance</p>
+    <div class="stats">${stats.map(([n, l]) => `<div class="stat"><b>${n}</b><span>${l}</span></div>`).join('')}</div>
+    <div class="box"><div class="tg" style="justify-content:space-between"><h3 style="margin:0">Latest orders</h3><button class="btn sm" data-act="go-orders" type="button">See all orders</button></div>
+    ${orders.slice(0, 5).map(orderCard).join('') || '<p class="muted">No orders yet.</p>'}</div>`;
+}
+
+/* ---------- orders ---------- */
+function orderCard(o) {
+  const items = (o.items || []).map(i => `${esc(i.name)} (${esc(i.size)}) × ${Number(i.qty)}`).join(', ');
+  const addr = [o.address, o.city, o.pincode].filter(Boolean).map(esc).join(', ');
+  return `<div class="row"><div class="grow">
+    <b>${esc(o.customer)}</b> · ${esc(o.phone)}
+    <span class="pill ${esc(o.status)}">${esc(o.status)}</span><span class="pill">${esc(o.payment_method || o.payment || '')}</span><span class="pill ${o.payment_status === 'paid' ? 'done' : ''}">${esc(o.payment_status || '')}</span>
+    <div class="muted">${esc(o.id)} · ${esc(o.order_date)} · ${addr}</div>
+    <div class="muted">${items}${o.coupon ? ' · code ' + esc(o.coupon) : ''}${Number(o.discount) ? ' · saved ' + money(o.discount) : ''}${Number(o.delivery_fee) ? ' · delivery ' + money(o.delivery_fee) : ''}</div>
+  </div>
+  <div style="text-align:right;white-space:nowrap"><b>${money(o.total)}</b>
+    <div class="tg" style="justify-content:flex-end;margin-top:6px">
+      ${o.payment_status !== 'paid' && o.status !== 'cancelled' ? `<button class="btn sm g" data-act="order-paid" data-id="${esc(o.id)}" type="button">Mark paid</button>` : ''}
+      ${isOpen(o) ? `<button class="btn sm" data-act="order-done" data-id="${esc(o.id)}" type="button">Mark done</button>` : ''}
+      ${isOpen(o) ? `<button class="btn sm d" data-act="order-cancel" data-id="${esc(o.id)}" type="button">Cancel</button>` : ''}
+    </div></div></div>`;
+}
+function viewOrders() {
+  return `<h2>Orders</h2><p class="sub">Orders from your website. Mark an order paid when you receive the money, and done when it is delivered or collected.</p>
+    <div class="box"><div class="tg" style="justify-content:space-between;margin-bottom:8px"><label style="width:240px">Show<select id="oFilter"><option value="open">Open orders</option><option value="done">Done</option><option value="all">All orders</option></select></label></div>
+    <div id="oList"></div></div>`;
+}
+function renderOrderList() {
+  const f = $('#oFilter') ? $('#oFilter').value : orderFilter;
+  orderFilter = f;
+  const list = orders.filter(o => f === 'all' ? true : f === 'done' ? o.status === 'done' : isOpen(o));
+  const box = $('#oList');
+  if (box) box.innerHTML = list.map(orderCard).join('') || '<p class="muted">No orders here.</p>';
+}
+async function setOrder(id, body, text) {
+  try {
+    await rest(`web_orders?id=eq.${enc(id)}`, { method: 'PATCH', owner: true, prefer: 'return=minimal', body });
+    toast(text);
+    await loadAll();
+    render();
+  } catch (e) { toast(e.message); }
+}
+
+/* ---------- products ---------- */
+const sizeRow = (s) => `<tr><td><input class="sz" value="${esc(s.size || '')}" placeholder="e.g. M" /></td><td><input class="sq" type="number" min="0" value="${Number(s.stock) || 0}" /></td><td><button class="btn sm d" data-act="rm-size" type="button">Remove</button></td></tr>`;
+function viewProducts() {
+  const cats = [...new Set(groups.map(g => g.category))];
+  return `<div class="tg" style="justify-content:space-between"><div><h2>Products</h2><p class="sub">Add products, set prices, and set the quantity for each size.</p></div><button class="btn p" data-act="new-prod" type="button">+ Add product</button></div>
+    <div id="pEdWrap"></div>
+    <datalist id="catList">${cats.map(c => `<option value="${esc(c)}">`).join('')}</datalist>
+    <div class="box">${groups.map((g, i) => `<div class="row">
+      <div class="thumb">${g.photo ? `<img src="${esc(g.photo)}" alt="">` : esc(g.name.charAt(0))}</div>
+      <div class="grow"><b>${esc(g.name)}</b> · ${esc(g.colour)} <span class="pill">${esc(g.category)}</span>
+        <div class="muted">${money(g.price)} · ${g.sizes.map(s => `${esc(s.size)}: ${s.stock}`).join(' · ')}</div></div>
+      <div class="tg"><button class="btn sm" data-act="edit-prod" data-i="${i}" type="button">Edit</button><button class="btn sm" data-act="dup-prod" data-i="${i}" type="button">Duplicate</button><button class="btn sm d" data-act="del-prod" data-i="${i}" type="button">Delete</button></div>
+    </div>`).join('') || '<p class="muted">No products yet. Click Add product.</p>'}</div>`;
+}
+function openProdEditor(src, isNew) {
+  pEdit = isNew ? null : src.sizes.map(s => ({ size: s.size, sku: s.sku }));
+  pendingPhoto = null;
+  const sizes = src.sizes && src.sizes.length ? src.sizes : [{ size: '', stock: 0 }];
+  const title = isNew ? 'New product' : `Edit: ${src.name} (${src.colour})`;
+  $('#pEdWrap').innerHTML = `<div class="box" id="pEd"><h2>${esc(title)}</h2><p class="sub">Fill in the details, then add each size with the quantity in stock.</p>
+    <div class="grid3">
+      <label>Product name<input id="pName" value="${esc(src.name || '')}" /></label>
+      <label>Category<input id="pCat" list="catList" value="${esc(src.category || '')}" /></label>
+      <label>Colour<input id="pColour" value="${esc(src.colour || '')}" /></label>
+      <label>Price ₹ (same for all sizes)<input id="pPrice" type="number" min="0" value="${src.price != null ? esc(src.price) : ''}" /></label>
+      <label>Photo<input id="pPhoto" type="file" accept="image/*" /></label>
+      <label class="tg" style="align-self:end"><input id="pRemove" type="checkbox" /> Remove current photo</label>
+    </div>
+    <h3>Sizes and quantity in stock</h3>
+    <table><thead><tr><th>Size</th><th>Quantity</th><th></th></tr></thead><tbody id="sizeRows">${sizes.map(sizeRow).join('')}</tbody></table>
+    <button class="btn sm" data-act="add-size" type="button" style="margin-top:8px">+ Add size</button>
+    <div class="tg" style="margin-top:16px"><button class="btn g" data-act="save-prod" type="button">Save product</button><button class="btn" data-act="cancel-prod" type="button">Cancel</button></div>
+    <p class="msg" id="pMsg"></p></div>`;
+  if (!isNew && photos.get(src.sizes[0] && src.sizes[0].sku)) msg('pMsg', 'This product has a photo. Choose a new one to replace it.');
+  $('#pEd').scrollIntoView({ behavior: 'smooth' });
+}
+async function saveProduct() {
+  const name = val('pName'), colour = val('pColour'), category = val('pCat') || 'Other';
+  const price = Number(val('pPrice'));
+  if (!name || val('pPrice') === '' || price < 0) return msg('pMsg', 'Enter the product name and price.', true);
+  const sizes = [...document.querySelectorAll('#sizeRows tr')].map(tr => ({ size: tr.querySelector('.sz').value.trim() || 'Free', qty: Math.max(0, parseInt(tr.querySelector('.sq').value, 10) || 0) }));
+  if (!sizes.length) return msg('pMsg', 'Add at least one size.', true);
+  if (new Set(sizes.map(s => s.size.toLowerCase())).size !== sizes.length) return msg('pMsg', 'Each size can only be listed once.', true);
+  const before = pEdit || [];
+  const body = sizes.map(s => { const old = before.find(b => b.size === s.size); return { sku: old ? old.sku : newSku(name, colour, s.size), name, category, colour, size: s.size, price, stock: s.qty }; });
+  try {
+    await rest('products?on_conflict=sku', { method: 'POST', owner: true, prefer: 'resolution=merge-duplicates,return=minimal', body });
+    for (const b of before.filter(b => !sizes.some(s => s.size === b.size))) {
+      await rest(`products?sku=eq.${enc(b.sku)}`, { method: 'DELETE', owner: true, prefer: 'return=minimal' });
+      await rest(`product_photos?sku=eq.${enc(b.sku)}`, { method: 'DELETE', owner: true, prefer: 'return=minimal' });
+    }
+    const skus = body.map(b => b.sku);
+    if (pendingPhoto) await rest('product_photos?on_conflict=sku', { method: 'POST', owner: true, prefer: 'resolution=merge-duplicates,return=minimal', body: skus.map(sku => ({ sku, photo: pendingPhoto })) });
+    else if (chk('pRemove')) for (const sku of skus) await rest(`product_photos?sku=eq.${enc(sku)}`, { method: 'DELETE', owner: true, prefer: 'return=minimal' });
+    pEdit = null; pendingPhoto = null;
+    await loadAll();
+    render();
+    toast('Product saved. The website and billing software will update shortly.');
+  } catch (e) { msg('pMsg', e.message, true); }
+}
+async function deleteProduct(i) {
+  const g = groups[i];
+  if (!g || !confirm(`Delete ${g.name} (${g.colour}) and all its sizes?`)) return;
+  try {
+    for (const s of g.sizes) {
+      await rest(`products?sku=eq.${enc(s.sku)}`, { method: 'DELETE', owner: true, prefer: 'return=minimal' });
+      await rest(`product_photos?sku=eq.${enc(s.sku)}`, { method: 'DELETE', owner: true, prefer: 'return=minimal' });
+    }
+    await loadAll(); render(); toast('Product deleted.');
+  } catch (e) { toast(e.message); }
+}
+
+/* ---------- offers ---------- */
+function viewOffers() {
+  return `<h2>Offers &amp; coupons</h2><p class="sub">An offer without a code applies to every order automatically. An offer with a code applies when the customer types it.</p>
+    <div class="box">${offers.map(o => `<div class="row"><div class="grow"><b>${esc(o.title)}</b> <span class="pill">${esc(o.type || 'Offer')}</span>${o.active === false ? '<span class="pill">off</span>' : ''}
+      <div class="muted">${Number(o.discount) ? Number(o.discount) + '% off' : 'No discount'}${o.coupon ? ' · code ' + esc(o.coupon) : ' · automatic'}${Number(o.min_order) ? ' · min order ' + money(o.min_order) : ''}${o.until ? ' · till ' + esc(o.until) : ' · no end date'}</div>
+      <div class="muted">${esc(o.details || '')}</div></div>
+      <div class="tg"><button class="btn sm" data-act="edit-offer" data-id="${esc(o.id)}" type="button">Edit</button><button class="btn sm d" data-act="del-offer" data-id="${esc(o.id)}" type="button">Delete</button></div></div>`).join('') || '<p class="muted">No offers yet.</p>'}</div>
+    <div class="box" id="oFormBox"><h3 id="oFormTitle">Add an offer or coupon</h3>
+      <div class="grid2">
+        <label>Title<input id="oTitle" placeholder="e.g. Festival sale" /></label>
+        <label>Type<select id="oType"><option>Offer</option><option>Event</option></select></label>
+        <label class="full">Details shown to customers<input id="oDetails" /></label>
+        <label>Discount %<input id="oDiscount" type="number" min="0" max="90" /></label>
+        <label>Coupon code (leave blank for an automatic offer)<input id="oCoupon" /></label>
+        <label>Minimum order ₹<input id="oMin" type="number" min="0" /></label>
+        <label>Valid till (leave blank for no end date)<input id="oUntil" type="date" /></label>
+        <label class="tg full"><input id="oActive" type="checkbox" checked /> Active</label>
+      </div>
+      <div class="tg" style="margin-top:12px"><button class="btn g" data-act="save-offer" type="button">Save offer</button><button class="btn" data-act="cancel-offer" type="button">Clear form</button></div>
+      <p class="msg" id="oMsg"></p></div>`;
+}
+function editOffer(id) {
+  const o = offers.find(x => x.id === id);
+  if (!o) return;
+  editingOffer = id;
+  $('#oTitle').value = o.title || ''; $('#oType').value = o.type || 'Offer'; $('#oDetails').value = o.details || '';
+  $('#oDiscount').value = Number(o.discount) || ''; $('#oCoupon').value = o.coupon || ''; $('#oMin').value = Number(o.min_order) || '';
+  $('#oUntil').value = o.until || ''; $('#oActive').checked = o.active !== false;
+  $('#oFormTitle').textContent = `Edit: ${o.title}`;
+  $('#oFormBox').scrollIntoView({ behavior: 'smooth' });
+}
+function clearOffer() {
+  editingOffer = null;
+  ['oTitle', 'oDetails', 'oDiscount', 'oCoupon', 'oMin', 'oUntil'].forEach(id => { $('#' + id).value = ''; });
+  $('#oType').value = 'Offer'; $('#oActive').checked = true; $('#oFormTitle').textContent = 'Add an offer or coupon';
+}
+async function saveOffer() {
+  const title = val('oTitle');
+  if (!title) return msg('oMsg', 'Enter a title for the offer.', true);
+  const row = { id: editingOffer || 'off_' + Date.now().toString(36), type: val('oType'), title, details: val('oDetails'), discount: Math.max(0, Number(val('oDiscount')) || 0), coupon: val('oCoupon').toUpperCase(), min_order: Math.max(0, Number(val('oMin')) || 0), until: val('oUntil') || null, active: chk('oActive') };
+  try {
+    await rest('offers?on_conflict=id', { method: 'POST', owner: true, prefer: 'resolution=merge-duplicates,return=minimal', body: row });
+    clearOffer(); await loadAll(); render(); toast('Offer saved. It now shows on the website.');
+  } catch (e) { msg('oMsg', e.message, true); }
+}
+async function deleteOffer(id) {
+  if (!confirm('Delete this offer?')) return;
+  try { await rest(`offers?id=eq.${enc(id)}`, { method: 'DELETE', owner: true, prefer: 'return=minimal' }); await loadAll(); render(); toast('Offer deleted.'); }
+  catch (e) { toast(e.message); }
+}
+
+/* ---------- shop and address ---------- */
+function viewShop() {
+  const s = settings;
+  return `<h2>Shop &amp; address</h2><p class="sub">These details appear on the website, at checkout, and on order messages.</p>
+    <div class="box"><div class="grid2">
+      <label>Shop name<input id="sName" value="${esc(s.name || '')}" /></label>
+      <label>Tagline<input id="sTag" value="${esc(s.tagline || '')}" /></label>
+      <label class="full">About the shop<textarea id="sAbout">${esc(s.about || '')}</textarea></label>
+      <label class="full">Street address (shop)<input id="sAddr" value="${esc(s.address || '')}" /></label>
+      <label>City<input id="sCity" value="${esc(s.city || '')}" /></label>
+      <label>Pincode<input id="sPin" value="${esc(s.pincode || '')}" /></label>
+      <label>Phone<input id="sPhone" value="${esc(s.phone || '')}" /></label>
+      <label>WhatsApp (with 91, digits only)<input id="sWa" value="${esc(s.whatsapp || '')}" /></label>
+      <label>Opening hours<input id="sHours" value="${esc(s.hours || '')}" /></label>
+      <label>Instagram link<input id="sIg" value="${esc(s.instagram || '')}" /></label>
+      <label class="full">Shop logo (square image works best)<input id="sLogo" type="file" accept="image/*" /></label>
+    </div>
+    <div class="tg" style="margin-top:14px"><button class="btn g" data-act="save-shop" type="button">Save shop details</button></div>
+    <p class="msg" id="sMsg"></p></div>`;
+}
+async function saveShop() {
+  const row = { name: val('sName') || settings.name, tagline: val('sTag'), about: val('sAbout'), address: val('sAddr'), city: val('sCity'), pincode: val('sPin'), phone: val('sPhone'), whatsapp: val('sWa').replace(/\D/g, ''), hours: val('sHours'), instagram: val('sIg'), logo: pendingLogo !== null ? pendingLogo : (settings.logo || ''), updated_at: new Date().toISOString() };
+  try {
+    const res = await rest('shop_settings?id=eq.1', { method: 'PATCH', owner: true, prefer: 'return=representation', body: row });
+    if (!res || !res.length) throw new Error('Wrong shop key, or no permission to change this.');
+    pendingLogo = null; await loadAll(); render(); msg('sMsg', 'Saved. The website and billing software will update shortly.');
+  } catch (e) { msg('sMsg', e.message, true); }
+}
+
+/* ---------- payments and delivery ---------- */
+function viewPay() {
+  const s = settings;
+  return `<h2>Payments &amp; delivery</h2><p class="sub">Choose how customers can pay, and set the delivery charge.</p>
+    <div class="box"><h3 style="margin-top:0">Payment methods shown at checkout</h3>
+      <div class="grid2">
+        <label class="tg"><input id="cCod" type="checkbox" ${s.pay_cod ? 'checked' : ''} /> Cash on delivery</label>
+        <label class="tg"><input id="cShop" type="checkbox" ${s.pay_shop ? 'checked' : ''} /> Pay at the shop</label>
+        <label class="tg"><input id="cUpi" type="checkbox" ${s.pay_upi ? 'checked' : ''} /> UPI (GPay, PhonePe, Paytm)</label>
+        <label class="tg"><input id="cCard" type="checkbox" ${s.pay_card ? 'checked' : ''} /> Card (you send a payment link on WhatsApp)</label>
+        <label>UPI ID (for example shopname@upi)<input id="pUpi" value="${esc(s.upi_id || '')}" /></label>
+        <label>Name shown on UPI payments<input id="pUpiName" value="${esc(s.upi_name || '')}" /></label>
+      </div>
+      <p class="muted" style="margin-top:10px">UPI shows only when a UPI ID is entered. Card payments need you to send the payment link yourself, unless you connect a payment provider later.</p></div>
+    <div class="box"><h3 style="margin-top:0">Delivery charge</h3>
+      <div class="grid2">
+        <label>Delivery fee ₹ (0 = free)<input id="pFee" type="number" min="0" value="${Number(s.delivery_fee) || 0}" /></label>
+        <label>Free delivery for orders above ₹ (0 = never free)<input id="pFree" type="number" min="0" value="${Number(s.free_delivery_above) || 0}" /></label>
+      </div></div>
+    <div class="tg"><button class="btn g" data-act="save-pay" type="button">Save payment settings</button></div>
+    <p class="msg" id="pyMsg"></p>`;
+}
+async function savePay() {
+  const body = { pay_cod: chk('cCod'), pay_shop: chk('cShop'), pay_upi: chk('cUpi'), pay_card: chk('cCard'), upi_id: val('pUpi'), upi_name: val('pUpiName'), delivery_fee: Math.max(0, Number(val('pFee')) || 0), free_delivery_above: Math.max(0, Number(val('pFree')) || 0) };
+  try {
+    const res = await rest('shop_settings?id=eq.1', { method: 'PATCH', owner: true, prefer: 'return=representation', body });
+    if (!res || !res.length) throw new Error('Wrong shop key, or no permission to change this.');
+    await loadAll(); render(); msg('pyMsg', 'Saved. Checkout on the website now shows these options.');
+  } catch (e) { msg('pyMsg', e.message, true); }
+}
+
+/* ---------- login and clicks ---------- */
+async function enter() {
+  try {
+    await loadAll();
+    $('#login').hidden = true;
+    $('#appUi').hidden = false;
+    show('dash');
+  } catch (e) { sessionStorage.removeItem('tgt_key'); msg('lMsg', 'Could not open the admin. Check the shop key.', true); }
+}
+async function login() {
+  const k = val('lKey');
+  if (!k) return msg('lMsg', 'Enter your shop key.', true);
+  sessionStorage.setItem('tgt_key', k);
+  try {
+    const st = (await rest('shop_settings?id=eq.1&select=*'))[0];
+    const check = await rest('shop_settings?id=eq.1', { method: 'PATCH', owner: true, prefer: 'return=representation', body: { name: st.name } });
+    if (!check || !check.length) throw new Error('wrong');
+    await enter();
+  } catch (e) { sessionStorage.removeItem('tgt_key'); msg('lMsg', 'That shop key is not right, or the database cannot be reached.', true); }
+}
+
+document.addEventListener('click', (e) => {
+  const t = e.target;
+  const nav = t.closest('#nav button[data-v]');
+  if (nav) return show(nav.dataset.v);
+  if (t.closest('#btnLogin')) return login();
+  if (t.closest('#btnLogout')) { sessionStorage.removeItem('tgt_key'); location.reload(); return; }
+  const b = t.closest('[data-act]');
+  if (!b) return;
+  const a = b.dataset.act;
+  const id = b.dataset.id, i = Number(b.dataset.i);
+  if (a === 'go-orders') return show('orders');
+  if (a === 'new-prod') return openProdEditor({ name: '', category: '', colour: '', price: '', sizes: [] }, true);
+  if (a === 'edit-prod') return openProdEditor(groups[i], false);
+  if (a === 'dup-prod') {
+    const g = groups[i];
+    const copy = { ...g, name: g.name, sizes: g.sizes.map(s => ({ size: s.size, stock: 0 })) };
+    openProdEditor(copy, true);
+    if (photos.get(g.sizes[0].sku)) pendingPhoto = photos.get(g.sizes[0].sku);
+    msg('pMsg', 'Copied. Change the details and sizes, then save as a new product.');
+    return;
+  }
+  if (a === 'del-prod') return deleteProduct(i);
+  if (a === 'save-prod') return saveProduct();
+  if (a === 'cancel-prod') { $('#pEdWrap').innerHTML = ''; pEdit = null; pendingPhoto = null; return; }
+  if (a === 'add-size') { $('#sizeRows').insertAdjacentHTML('beforeend', sizeRow({ size: '', stock: 0 })); return; }
+  if (a === 'rm-size') { b.closest('tr').remove(); return; }
+  if (a === 'edit-offer') return editOffer(id);
+  if (a === 'del-offer') return deleteOffer(id);
+  if (a === 'save-offer') return saveOffer();
+  if (a === 'cancel-offer') return clearOffer();
+  if (a === 'save-shop') return saveShop();
+  if (a === 'save-pay') return savePay();
+  if (a === 'order-paid') return setOrder(id, { payment_status: 'paid' }, 'Marked as paid.');
+  if (a === 'order-done') return setOrder(id, { status: 'done' }, 'Marked as done.');
+  if (a === 'order-cancel') { if (confirm('Cancel this order?')) setOrder(id, { status: 'cancelled' }, 'Order cancelled.'); return; }
+});
+document.addEventListener('change', (e) => {
+  const t = e.target;
+  if (t.id === 'oFilter') return renderOrderList();
+  if (t.id === 'pPhoto') return pickFile(t, 480, (d) => { pendingPhoto = d; msg('pMsg', 'Photo ready. Click Save product.'); });
+  if (t.id === 'sLogo') return pickFile(t, 256, (d) => { pendingLogo = d; msg('sMsg', 'Logo ready. Click Save shop details.'); });
+});
+
+$('#btnLogin').addEventListener('click', login);
+$('#lKey').addEventListener('keydown', (e) => { if (e.key === 'Enter') login(); });
+if (sessionStorage.getItem('tgt_key')) enter();
+</script>
+</body>
+</html>
